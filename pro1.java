@@ -12,7 +12,7 @@ public class pro1 {
         return a;
     }
 
-
+//测试
     public static void main(String[] args){
         int a[] = {3,2,4};
         int target = 6;
