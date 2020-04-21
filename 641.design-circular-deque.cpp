@@ -64,70 +64,96 @@
  */
 class MyCircularDeque {
 private:
-    std::vector<int> que;
-    int maxSize;
+    int m_head;
+    int m_tail;
+    int m_maxsize;
+    int m_size;
+    int* m_que;
+
 public:
     /** Initialize your data structure here. Set the size of the deque to be k. */
     MyCircularDeque(int k) {
-        maxSize = k;
+        m_head = 0;
+        m_tail = 0;
+        m_size = 0;
+        m_maxsize = k;
+        m_que = new int[k];
     }
     
     /** Adds an item at the front of Deque. Return true if the operation is successful. */
     bool insertFront(int value) {
-        if(que.size() == maxSize){
+        if(isFull())
             return false;
-        }
-        que.insert(que.begin(), value);
+        if(m_head - 1 < 0)
+            m_head = m_maxsize - 1;
+        else
+            m_head--;
+        m_que[m_head] = value;
+        m_size++;
         return true;
     }
     
     /** Adds an item at the rear of Deque. Return true if the operation is successful. */
     bool insertLast(int value) {
-        if(que.size() == maxSize){
+        if(isFull())
             return false;
-        }
-        que.push_back(value);
+        if(m_tail + 1 >= m_maxsize)
+            m_tail = 0;
+        else
+            m_tail++;
+        m_que[m_tail] = value;
+        m_size++;
         return true;
     }
     
     /** Deletes an item from the front of Deque. Return true if the operation is successful. */
     bool deleteFront() {
-        if(que.empty())
+        if(isEmpty())
             return false;
-        que.erase(que.begin());
+        if(m_head + 1 == m_maxsize)
+            m_head = 0;
+        else 
+            m_head++;
+        m_size--;
         return true;
     }
     
     /** Deletes an item from the rear of Deque. Return true if the operation is successful. */
     bool deleteLast() {
-        if(que.empty())
+        if(isEmpty())
             return false;
-        que.pop_back();
+        if(m_tail - 1 < 0)
+            m_tail = m_maxsize - 1;
+        else 
+            m_tail--;
+        m_size--;
         return true;
     }
     
     /** Get the front item from the deque. */
     int getFront() {
-        if(que.empty())
+        if(isEmpty())
             return -1;
-        return que.front();
+        else
+            return m_que[m_head];
     }
     
     /** Get the last item from the deque. */
     int getRear() {
-        if(que.empty())
+        if(isEmpty())
             return -1;
-        return que.back();
+        else
+            return m_que[m_tail];
     }
     
     /** Checks whether the circular deque is empty or not. */
     bool isEmpty() {
-        return que.empty() ? true : false;
+       return m_size == 0;
     }
     
     /** Checks whether the circular deque is full or not. */
     bool isFull() {
-        return que.size() == maxSize ? true : false;
+        return m_size == m_maxsize;
     }
 };
 
