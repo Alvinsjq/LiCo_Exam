@@ -97,12 +97,15 @@ public:
     bool insertLast(int value) {
         if(isFull())
             return false;
-        if(m_tail + 1 >= m_maxsize)
+        
+	m_que[m_tail] = value;
+
+	if(m_tail + 1 >= m_maxsize)
             m_tail = 0;
-        else
-            m_tail++;
-        m_que[m_tail] = value;
-        m_size++;
+	else
+	    m_tail++;
+        
+	m_size++;
         return true;
     }
     
@@ -142,8 +145,11 @@ public:
     int getRear() {
         if(isEmpty())
             return -1;
-        else
+        else{
+ 	    if(m_tail - 1 < 0)
+		    m_tail = m_maxsize - 1;
             return m_que[m_tail];
+	}
     }
     
     /** Checks whether the circular deque is empty or not. */
