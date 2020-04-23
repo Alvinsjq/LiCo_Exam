@@ -146,9 +146,10 @@ public:
         if(isEmpty())
             return -1;
         else{
- 	    if(m_tail - 1 < 0)
-		    m_tail = m_maxsize - 1;
-            return m_que[m_tail];
+	    int index = m_tail - 1;
+ 	    if(index < 0)
+		    index = m_maxsize - 1;
+            return m_que[index];
 	}
     }
     
