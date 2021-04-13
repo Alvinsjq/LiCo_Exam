@@ -66,13 +66,15 @@ public:
         int tmp = INT_MIN;
         inorder(root);
         for(int i=0; i<orderlist.size()-1; i++){
-            if(orderlist[i] > orderlist[i+1]){
+            if(orderlist[i]->val > orderlist[i+1]->val){
                 if(index1 == -1){
                     index1 = i;
                 } 
                 index2 = i+1;
+                std::cout << "i=" << i << ",index2=" << index2 << std::endl;
             }
         }
+        
         if(index1 != -1 && index2 != -1)
         {
             tmp = orderlist[index1]->val;
