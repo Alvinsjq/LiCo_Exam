@@ -75,10 +75,14 @@
 // @lc code=start
 class Solution {
 public:
+    int memory[10002]={0};
     int coinChange(vector<int>& coins, int amount) {
-        if(amount == 0) return 0;
         if(amount < 0) return -1;
+        if(amount == 0) return 0;
+        if(memory[amount-1] != 0)
+            return memory[amount-1];
         int min = INT_MAX;
+
         for(int i=0; i<coins.size(); i++)
         {
             int sub = coinChange(coins, amount-coins[i]);
@@ -86,9 +90,8 @@ public:
             if(sub == -1) continue;
             min = 1+sub > min ? min : 1+sub;
         }
-        if(min == INT_MAX)
-            return -1;
-        return min;
+        memory[amount-1] = (min == INT_MAX) ? -1 : min; //记入备忘录
+        return memory[amount-1];
     }
 };
 // @lc code=end
