@@ -68,7 +68,7 @@
  * dp(n) = 
  * -1   n<0
  * 0    n=0
- * min{1+dp(n-coin)|coin bl coins} n>0
+ * min{1+dp(n-coin)|coin belong coins} n>0
  * 
  */
 
@@ -79,10 +79,9 @@ public:
     int coinChange(vector<int>& coins, int amount) {
         if(amount < 0) return -1;
         if(amount == 0) return 0;
-        if(memory[amount-1] != 0)
-            return memory[amount-1];
+        if(memory[amount] != 0)
+            return memory[amount];
         int min = INT_MAX;
-
         for(int i=0; i<coins.size(); i++)
         {
             int sub = coinChange(coins, amount-coins[i]);
@@ -90,8 +89,8 @@ public:
             if(sub == -1) continue;
             min = 1+sub > min ? min : 1+sub;
         }
-        memory[amount-1] = (min == INT_MAX) ? -1 : min; //记入备忘录
-        return memory[amount-1];
+        memory[amount] = (min == INT_MAX) ? -1 : min; //记入备忘录
+        return memory[amount];
     }
 };
 // @lc code=end
