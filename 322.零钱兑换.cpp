@@ -77,7 +77,7 @@ class Solution {
 public:
     int memory[10002]={0};
     int coinChange(vector<int>& coins, int amount) {
-        if(amount < 0) return -1;
+        if(amount < 0) return -1; // 都会跳过，不在背包中
         if(amount == 0) return 0;
         if(memory[amount] != 0)
             return memory[amount];
