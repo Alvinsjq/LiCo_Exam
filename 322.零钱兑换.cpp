@@ -75,22 +75,26 @@
 // @lc code=start
 class Solution {
 public:
-    int memory[10002]={0};
+    /**
+     * 自底向上完善db table
+     * index  0  1  2  3  4  5  6  7  8  9  10 11
+     * dp_int 12 12 12 12 12 12 12 12 12 12 12 12
+     * dp     0  1  1  2  2  1  2  2  3  3  2  3
+     */
     int coinChange(vector<int>& coins, int amount) {
-        if(amount < 0) return -1; // 都会跳过，不在背包中
-        if(amount == 0) return 0;
-        if(memory[amount] != 0)
-            return memory[amount];
-        int min = INT_MAX;
-        for(int i=0; i<coins.size(); i++)
+        // 初始值为amount+1的原因是 最多使用全是面值为1的零钱
+        int max_val = amount+1;
+        vector<int> dp(amount+1, max_val);
+        dp[0] = 0;
+        for(int i=0; i<dp.size(); i++)
         {
-            int sub = coinChange(coins, amount-coins[i]);
-            // 如果子问题无解，则不算进去
-            if(sub == -1) continue;
-            min = 1+sub > min ? min : 1+sub;
+            for(int j=0; j<coins.size(); j++)
+            {
+                if(i-coins[j] < 0) continue;
+                dp[i] = min(dp[i], 1 + dp[i-coins[j]]);
+            }
         }
-        memory[amount] = (min == INT_MAX) ? -1 : min; //记入备忘录
-        return memory[amount];
+        return (dp[amount] == max_val) ? -1 : dp[amount];
     }
 };
 // @lc code=end
