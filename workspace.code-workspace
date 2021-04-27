@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "Leetcode_Job",
+			"path": "../Leetcode_Job"
+		}
+	],
+	"settings": {}
+}
