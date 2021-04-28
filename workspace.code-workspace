@@ -8,5 +8,11 @@
 			"path": "../Leetcode_Job"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"vector": "cpp",
+			"iosfwd": "cpp",
+			"iterator": "cpp"
+		}
+	}
 }
