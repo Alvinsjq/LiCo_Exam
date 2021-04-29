@@ -54,30 +54,68 @@
 // @lc code=start
 class Solution {
 public:
-    vector<vector<string>> res;
-    void backtrace(int n, vector<string> square)
-    {   
+    vector<vector<string>> result;
 
-
-        for(int i=0; i<n; i++)
+    bool isValid(int row, int col, vector<string> square)
+    {
+        // 横向无需确认
+        // 纵向
+        for(int i=0; i<row; i++)
         {
-            // 前序，跳过哪些
-            if(!valid())
+            if(square[i][col] == 'Q')
             {
-                
+                return false;
             }
-            square[i][]
-            backtrace(n, square);
-
         }
+
+        // 左上
+        for(int i=row-1,j=col-1; i>=0 && j>=0; i--,j--)
+        {
+            if(square[i][j] == 'Q')
+            {
+                return false;
+            }
+        }
+
+        // 右上            
+        for(int i=row-1,j=col+1; i>=0 && j<=square.size(); i--,j++)
+        {
+            if(square[i][j] == 'Q')
+            {
+                return false;
+            }
+        }
+        return true;
     }
+
+    void backtrace(int row, vector<string> square)
+    {
+        // 终止条件
+        if(row == square.size())
+        {   
+            result.push_back(square);
+            return;
+        }
+
+        for(int col=0; col<square.size(); col++)
+        {
+            // 选择可以放Q的位置
+            if(!isValid(row, col, square)) continue;
+            // 此处填Q
+            square[row][col] = 'Q';
+            // 回溯
+            backtrace(row+1, square);
+            // 恢复原值
+            square[row][col] = '.';
+        }
+
+    }
+
     vector<vector<string>> solveNQueens(int n) {
         vector<string> square(n, string(n, '.'));
-        backtrace(n, square);
-        return res;
+        backtrace(0, square);
+        return result;
     }
-
-
 };
 // @lc code=end
 
